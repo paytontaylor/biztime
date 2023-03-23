@@ -2,6 +2,8 @@
 
 DROP TABLE IF EXISTS invoices;
 DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS industries;
+DROP TABLE IF EXISTS companies_industries;
 
 CREATE TABLE companies (
     code text PRIMARY KEY,
@@ -19,12 +21,34 @@ CREATE TABLE invoices (
     CONSTRAINT invoices_amt_check CHECK ((amt > (0)::double precision))
 );
 
+CREATE TABLE industries (
+  code text PRIMARY KEY,
+  industry text NOT NULL
+);
+
+CREATE TABLE companies_industries (
+  id serial PRIMARY KEY,
+  company_code text NOT NULL,
+  industry_code text NOT NULL
+);
+
 INSERT INTO companies (code, name, description)
   VALUES ('apple', 'Apple Computer', 'Maker of OSX.'),
          ('ibm', 'IBM', 'Big blue.');
 
-INSERT INTO invoices (comp_Code, amt, paid, paid_date)
+INSERT INTO invoices (comp_code, amt, paid, paid_date)
   VALUES ('apple', 100, false, null),
          ('apple', 200, false, null),
          ('apple', 300, true, '2018-01-01'),
          ('ibm', 400, false, null);
+
+INSERT INTO industries (code, industry)
+  VALUES ('tech', 'Technology'),
+         ('mktg', 'Marketing'),
+         ('acct', 'Accounting');
+
+INSERT INTO companies_industries (company_code, industry_code)
+  VALUES ('apple', 'tech'),
+         ('apple', 'mktg'),
+         ('ibm', 'tech'),
+         ('amazon-web-services', 'tech');

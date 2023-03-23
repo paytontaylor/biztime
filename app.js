@@ -1,13 +1,15 @@
 const express = require("express");
 const ExpressError = require("./ExpressError");
-const companiesRoutes = require("./routes/companies/companiesRoutes")
-const invoicesRoutes = require("./routes/invoices/invoicesRoutes")
+const companiesRoutes = require("./routes/companies/companiesRoutes");
+const invoicesRoutes = require("./routes/invoices/invoicesRoutes");
+const industriesRoutes = require("./routes/industries/industriesRoutes");
 
 const app = express();
 
 app.use(express.json());
 app.use("/companies", companiesRoutes);
 app.use("/invoices", invoicesRoutes);
+app.use("/industries", industriesRoutes);
 
 app.use((req,res,next) => {
   const error = new ExpressError("Not Found", 404);
